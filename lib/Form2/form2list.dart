@@ -124,7 +124,7 @@ setState(() {
 }
 Future<void> DelForm2Record() async {
   final response = await http.get(
-    Uri.parse(form1DelRecord + "?Id=${getid}"),
+    Uri.parse(form2DelRecord + "?Id=${getid}"),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -177,7 +177,7 @@ Future<void> _showAlertDialog() async {
             child: const Text('Yes'),
             onPressed: () {
 
-              //DelForm2Record();
+              DelForm2Record();
 
               Navigator.of(context).pop();
               
