@@ -81,7 +81,7 @@ List <GetForm1Api>? apilist;
                   ),
                   PopupMenuItem(
                     value: '2',
-                    child: Text('Edit'),
+                    child: Text('Approve'),
                   ),
                   PopupMenuItem(
                     value: '3',
@@ -96,6 +96,10 @@ List <GetForm1Api>? apilist;
                 if(value =='3')
                 {
                   _showAlertDialog();
+                }
+                else if(value == '2')
+                {
+                  Approved();
                 }
 
               },
@@ -131,6 +135,37 @@ Future<void> DelForm1Record() async {
   if (response.statusCode == 200) {
     Fluttertoast.showToast(
       msg: "Delete Success",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.SNACKBAR,
+      timeInSecForIosWeb: 1,
+    );
+
+    // After a successful deletion, fetch data again and rebuild the widget.
+    await getApiData();
+    setState(() {});
+  }
+else{
+  print("${response.body}");
+  Fluttertoast.showToast(
+    msg: "${response.body}",
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.SNACKBAR,
+    timeInSecForIosWeb: 1,
+  );
+}
+}
+
+
+Future<void> Approved() async {
+  final response = await http.post(
+    Uri.parse(ApproveForm1byId + "?Id=${getid}"),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  );
+  if (response.statusCode == 200) {
+    Fluttertoast.showToast(
+      msg: "Approved",
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.SNACKBAR,
       timeInSecForIosWeb: 1,
